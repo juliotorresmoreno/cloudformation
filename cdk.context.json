@@ -1,0 +1,51 @@
+{
+  "vpc-provider:account=905418239247:filter.tag:Name=OdooVPC:region=us-east-2:returnAsymmetricSubnets=true": {
+    "vpcId": "vpc-028f6e75269080a7f",
+    "vpcCidrBlock": "10.0.0.0/16",
+    "ownerAccountId": "905418239247",
+    "availabilityZones": [],
+    "subnetGroups": [
+      {
+        "name": "PublicSubnet",
+        "type": "Public",
+        "subnets": [
+          {
+            "subnetId": "subnet-028371917cff6addc",
+            "cidr": "10.0.0.0/24",
+            "availabilityZone": "us-east-2a",
+            "routeTableId": "rtb-02f400ca2023699b8"
+          },
+          {
+            "subnetId": "subnet-0310b2f2ec760fd6a",
+            "cidr": "10.0.1.0/24",
+            "availabilityZone": "us-east-2b",
+            "routeTableId": "rtb-09f31cb99811e561c"
+          }
+        ]
+      },
+      {
+        "name": "PrivateSubnet",
+        "type": "Isolated",
+        "subnets": [
+          {
+            "subnetId": "subnet-0a2ea340f3895b9c0",
+            "cidr": "10.0.2.0/24",
+            "availabilityZone": "us-east-2a",
+            "routeTableId": "rtb-02054c8a84cea2a46"
+          },
+          {
+            "subnetId": "subnet-0eecc77fbbf7dd8e7",
+            "cidr": "10.0.3.0/24",
+            "availabilityZone": "us-east-2b",
+            "routeTableId": "rtb-01fd989fab9c0817f"
+          }
+        ]
+      }
+    ]
+  },
+  "availability-zones:account=905418239247:region=us-east-2": [
+    "us-east-2a",
+    "us-east-2b",
+    "us-east-2c"
+  ]
+}

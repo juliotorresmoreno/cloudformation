@@ -1,20 +1,49 @@
 #!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
-import { CloudformationStack } from '../lib/cloudformation-stack';
+import { NetworkStack } from '../lib/network-stack';
+import { DatabaseStack } from '../lib/database-stack';
+import { S3Stack } from '../lib/s3-stack';
+import { EfsStack } from '../lib/efs-stack';
+import { ComputeStack } from '../lib/compute-stack';
+import * as dotenv from 'dotenv';
 
-const app = new cdk.App();
-new CloudformationStack(app, 'CloudformationStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-   * Account/Region-dependent features and context lookups will not work,
-   * but a single synthesized template can be deployed anywhere. */
+dotenv.config();
 
-  /* Uncomment the next line to specialize this stack for the AWS Account
-   * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+const app = new cdk.App({
+    analyticsReporting: true,
+});
+let _: unknown;
+_ = new NetworkStack(app, 'NetworkStack', {
+    env: {
+        account: process.env.CDK_DEFAULT_ACCOUNT,
+        region: process.env.CDK_DEFAULT_REGION,
+    }
+});
 
-  /* Uncomment the next line if you know exactly what Account and Region you
-   * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
+_ = new S3Stack(app, 'S3Stack', {
+    env: {
+        account: process.env.CDK_DEFAULT_ACCOUNT,
+        region: process.env.CDK_DEFAULT_REGION,
+    },
+});
 
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
+_ = new DatabaseStack(app, 'DatabaseStack', {
+    env: {
+        account: process.env.CDK_DEFAULT_ACCOUNT,
+        region: process.env.CDK_DEFAULT_REGION,
+    },
+});
+
+_ = new EfsStack(app, 'EfsStack', {
+    env: {
+        account: process.env.CDK_DEFAULT_ACCOUNT,
+        region: process.env.CDK_DEFAULT_REGION,
+    },
+});
+
+_ = new ComputeStack(app, 'ComputeStack', {
+    env: {
+        account: process.env.CDK_DEFAULT_ACCOUNT,
+        region: process.env.CDK_DEFAULT_REGION,
+    },
 });
