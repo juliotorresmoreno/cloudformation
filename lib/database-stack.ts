@@ -66,11 +66,11 @@ export class DatabaseStack extends cdk.Stack {
             securityGroups: [dbSecurityGroup],
             multiAz: false, // Set to true for high availability
             allocatedStorage: 20, // Storage in GB
-            storageType: rds.StorageType.GP2,
+            storageType: rds.StorageType.GP3,
             backupRetention: cdk.Duration.days(7), // Retain backups for 7 days
             deletionProtection: false, // Set to true in production to prevent accidental deletion
             databaseName: 'odoodb', // Initial database name
-            credentials: rds.Credentials.fromPassword('odoo_admin', cdk.SecretValue.plainText(rdsPassword)), // Use the password from the environment variable
+            credentials: rds.Credentials.fromPassword('odoo_admin', cdk.SecretValue.unsafePlainText(rdsPassword)), // Use the password from the environment variable
             removalPolicy: cdk.RemovalPolicy.DESTROY, // Delete the DB when the stack is destroyed
 
             // Associate the IAM role with the RDS instance

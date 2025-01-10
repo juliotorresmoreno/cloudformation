@@ -7,7 +7,7 @@ export class ComputeStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
-        const sshIp = process.env.SSH_IP || '0.0.0.0/0';
+        const sshIp = process.env.SSH_IP ?? '0.0.0.0/0';
 
         // Reference to the existing VPC
         const vpc = ec2.Vpc.fromLookup(this, 'VPC', {
@@ -36,9 +36,22 @@ export class ComputeStack extends cdk.Stack {
         ec2Role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonElasticFileSystemFullAccess')); // Access EFS
         ec2Role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMManagedInstanceCore'));
 
+        // EC2 Instance
         const instance = new ec2.Instance(this, 'OdooInstance', {
             instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO),
-            machineImage: ec2.MachineImage.latestAmazonLinux2(), // Use Amazon Linux AMI
+            machineImage: ec2.MachineImage.latestAmazonLinux2(),
+            blockDevices: [
+                {
+                    deviceName: '/dev/xvda',
+                    volume: {
+                        ebsDevice: {
+                            deleteOnTermination: true,
+                            volumeSize: 50,
+                            volumeType: ec2.EbsDeviceVolumeType.GP3, // General Purpose SSD
+                        },
+                    },
+                },
+            ],
             vpc,
             vpcSubnets: {
                 subnetType: ec2.SubnetType.PUBLIC,

@@ -6,6 +6,7 @@ import { S3Stack } from '../lib/s3-stack';
 import { EfsStack } from '../lib/efs-stack';
 import { ComputeStack } from '../lib/compute-stack';
 import * as dotenv from 'dotenv';
+import { HelloWorldBeanstalkStack } from '../lib/helloworld-beanstalk-stack';
 
 dotenv.config();
 
@@ -42,6 +43,13 @@ _ = new EfsStack(app, 'EfsStack', {
 });
 
 _ = new ComputeStack(app, 'ComputeStack', {
+    env: {
+        account: process.env.CDK_DEFAULT_ACCOUNT,
+        region: process.env.CDK_DEFAULT_REGION,
+    },
+});
+
+_ = new HelloWorldBeanstalkStack(app, 'HelloWorldBeanstalkStack', {
     env: {
         account: process.env.CDK_DEFAULT_ACCOUNT,
         region: process.env.CDK_DEFAULT_REGION,

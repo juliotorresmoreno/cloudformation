@@ -32,6 +32,7 @@ export class S3Stack extends cdk.Stack {
         new cdk.CfnOutput(this, 'BucketName', {
             value: s3Bucket.bucketName,
             description: 'The name of the S3 bucket',
+            exportName: 'BucketName'
         });
     }
 }
